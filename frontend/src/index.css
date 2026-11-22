@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-[#242321] bg-[#F5F3EF];
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  .dark body {
+    @apply bg-[#171717] text-gray-100;
+  }
+}
+
+/* Realistic Skeleton Shimmer Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(227, 222, 213, 0.5) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(227, 222, 213, 0.5) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s infinite ease-in-out;
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(38, 38, 38, 0.65) 0%,
+    rgba(58, 58, 58, 0.85) 50%,
+    rgba(38, 38, 38, 0.65) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s infinite ease-in-out;
+}
