@@ -11,6 +11,7 @@ import {
 import api from '../services/api';
 import { BlockUnitsSkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const BlockUnitsPage = () => {
   const { blockId } = useParams();
@@ -65,6 +66,14 @@ const BlockUnitsPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 pb-24 transition-colors">
+      <SEOHead
+        title={`Block ${block.blockNumber}: ${block.name} – ${subject.name} | GenZ Notes`}
+        description={
+          block.description ||
+          `Academic block ${block.blockNumber} study units and digital notes for ${subject.name}.`
+        }
+        canonical={`https://genznotes.in/block/${blockId}`}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
         {/* Academic Breadcrumbs */}
         <nav className="flex items-center gap-1.5 text-xs text-[#77736C] dark:text-gray-400 flex-wrap">

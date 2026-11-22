@@ -10,6 +10,7 @@ import {
 import api from '../services/api';
 import { SubjectDetailsSkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const SubjectDetailsPage = () => {
   const { id } = useParams();
@@ -64,8 +65,36 @@ const SubjectDetailsPage = () => {
     );
   }
 
+  const isIgnou = subject.college?.code === 'IGNOU';
+  const cleanCanonical = isIgnou && subject.course?.code && subject.code
+    ? `https://genznotes.in/ignou/${subject.course.code.toLowerCase()}/${subject.code.toLowerCase()}/`
+    : `https://genznotes.in/subject/${id}`;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: `${subject.code ? `${subject.code} ` : ''}${subject.name}`,
+      description: subject.description || `Study material and notes for ${subject.name}`,
+      provider: {
+        '@type': 'EducationalOrganization',
+        name: 'GenZ Notes',
+        url: 'https://genznotes.in',
+      },
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 pb-24 transition-colors">
+      <SEOHead
+        title={`${subject.code ? `${subject.code} Notes – ` : ''}${subject.name} | GenZ Notes`}
+        description={
+          subject.description ||
+          `Study notes, curriculum blocks, and digital learning resources for ${subject.name} (${subject.code || ''}).`
+        }
+        canonical={cleanCanonical}
+        jsonLd={jsonLd}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
         {/* Academic Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-[#77736C] dark:text-gray-400 flex-wrap">

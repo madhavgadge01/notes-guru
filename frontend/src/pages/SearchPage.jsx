@@ -4,6 +4,7 @@ import { Search, BookOpen, Layers, GraduationCap, FileText, ArrowRight } from 'l
 import api from '../services/api';
 import { SearchSkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -38,6 +39,11 @@ const SearchPage = () => {
 
   return (
     <div className="min-h-screen bg-[#141414] text-gray-100 transition-colors py-8">
+      <SEOHead
+        title={query ? `Search: "${query}" | GenZ Notes` : 'Search Academic Notes | GenZ Notes'}
+        description="Search college subjects, course syllabus, and study notes on GenZ Notes."
+        noindex={true}
+      />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="pb-4 border-b border-gray-200 dark:border-neutral-800">
           <h1 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white flex items-center gap-2">

@@ -7,6 +7,7 @@ import EmptyState from '../components/common/EmptyState';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, BookOpen } from 'lucide-react';
+import SEOHead from '../components/common/SEOHead';
 
 const NotesReaderPage = () => {
   const { noteId } = useParams();
@@ -125,6 +126,11 @@ const NotesReaderPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#171717] text-[#242321] dark:text-gray-100 flex flex-col transition-colors">
+      <SEOHead
+        title={`${noteData?.title || 'Academic Notes'} – Digital Reader | GenZ Notes`}
+        description={`Read ${noteData?.title || 'college study notes'} on the GenZ Notes digital reader with high-yield derivations, page bookmarks, and verified syllabus content.`}
+        canonical={`https://genznotes.in/reader/${noteId}`}
+      />
       {/* Sub-header Bar with Back Navigation */}
       <div className="bg-[#FAF9F6] dark:bg-[#1C1C1C] border-b border-[#E3DED5] dark:border-neutral-800 px-4 py-2.5 flex items-center justify-between text-xs">
         <Link

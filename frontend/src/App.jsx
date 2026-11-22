@@ -19,6 +19,13 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import SearchPage from './pages/SearchPage';
 
+// IGNOU Dedicated SEO Routes
+import IgnouLandingPage from './pages/IgnouLandingPage';
+import IgnouCoursePage from './pages/IgnouCoursePage';
+import IgnouSemesterPage from './pages/IgnouSemesterPage';
+import IgnouSubjectPage from './pages/IgnouSubjectPage';
+import IgnouUnitPage from './pages/IgnouUnitPage';
+
 const AppContent = () => {
   const { sessionAlertMessage, clearSessionAlert } = useAuth();
   const location = useLocation();
@@ -47,6 +54,18 @@ const AppContent = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/search" element={<SearchPage />} />
+
+          {/* IGNOU Educational SEO Hierarchy */}
+          <Route path="/ignou" element={<IgnouLandingPage />} />
+          <Route path="/ignou/" element={<IgnouLandingPage />} />
+          <Route path="/ignou/:courseCode" element={<IgnouCoursePage />} />
+          <Route path="/ignou/:courseCode/" element={<IgnouCoursePage />} />
+          <Route path="/ignou/:courseCode/semester-:semNum" element={<IgnouSemesterPage />} />
+          <Route path="/ignou/:courseCode/semester-:semNum/" element={<IgnouSemesterPage />} />
+          <Route path="/ignou/:courseCode/:subjectCode" element={<IgnouSubjectPage />} />
+          <Route path="/ignou/:courseCode/:subjectCode/" element={<IgnouSubjectPage />} />
+          <Route path="/ignou/:courseCode/:subjectCode/unit-:unitNum" element={<IgnouUnitPage />} />
+          <Route path="/ignou/:courseCode/:subjectCode/unit-:unitNum/" element={<IgnouUnitPage />} />
         </Routes>
       </main>
 

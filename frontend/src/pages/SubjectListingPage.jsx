@@ -13,6 +13,7 @@ import {
 import api from '../services/api';
 import { SubjectListingSkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const SubjectListingPage = () => {
   const { semesterId: paramSemesterId } = useParams();
@@ -133,6 +134,23 @@ const SubjectListingPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 pb-24 transition-colors">
+      <SEOHead
+        title={
+          semesterData
+            ? `${semesterData.course?.code || semesterData.course?.name || 'Academic'} ${semesterData.name} Notes | GenZ Notes`
+            : 'Available Subjects & Notes | GenZ Notes'
+        }
+        description={
+          semesterData
+            ? `Access ${semesterData.name} study material, subject notes, syllabus topics, and unit breakdowns for ${semesterData.course?.name} at ${semesterData.college?.name}.`
+            : 'Browse college subjects, semester packages, and syllabus-aligned notes on GenZ Notes.'
+        }
+        canonical={
+          paramSemesterId
+            ? `https://genznotes.in/semester/${paramSemesterId}`
+            : 'https://genznotes.in/available-subjects'
+        }
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
         {/* Top Navigation & Breadcrumb */}
         <div className="flex items-center justify-between gap-2 flex-wrap">

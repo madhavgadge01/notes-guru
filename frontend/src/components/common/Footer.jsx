@@ -33,6 +33,9 @@ const Footer = () => {
                 <Link to="/" className="hover:text-[#DE8E5C] transition">Find Notes</Link>
               </li>
               <li>
+                <Link to="/ignou" className="hover:text-[#DE8E5C] transition">IGNOU Study Material</Link>
+              </li>
+              <li>
                 <Link to="/my-notes" className="hover:text-[#DE8E5C] transition">My Notes</Link>
               </li>
               <li>

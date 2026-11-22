@@ -1,0 +1,19 @@
+# Robots.txt for GenZ Notes (https://genznotes.in)
+User-agent: *
+Allow: /
+Allow: /ignou/
+Allow: /available-subjects
+Allow: /explore
+
+# Disallow private user accounts, authentication forms, and search result query strings
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+Disallow: /my-notes
+Disallow: /library
+Disallow: /wishlist
+Disallow: /search
+Disallow: /api/
+
+# XML Sitemap Location
+Sitemap: https://genznotes.in/sitemap.xml

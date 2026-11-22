@@ -24,6 +24,7 @@ const wishlistRoutes = require('./routes/wishlistRoutes');
 const searchRoutes = require('./routes/searchRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const supportRoutes = require('./routes/supportRoutes');
+const seoRoutes = require('./routes/seoRoutes');
 
 const app = express();
 
@@ -149,6 +150,7 @@ app.use('/api/library', libraryRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/seo', seoRoutes);
 
 // Catch-all 404
 app.use('*', (req, res) => {

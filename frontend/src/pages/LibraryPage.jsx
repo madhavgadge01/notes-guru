@@ -18,6 +18,7 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { LibrarySkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const LibraryPage = () => {
   const { isAuthenticated, user } = useAuth();
@@ -106,6 +107,7 @@ const LibraryPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 transition-colors py-8 pb-24">
+      <SEOHead title="My Notes & Library | GenZ Notes" noindex={true} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Header */}
         <div className="pb-4 border-b border-[#E3DED5] dark:border-neutral-800">

@@ -14,6 +14,7 @@ import {
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { SubjectGridSkeleton } from '../components/common/Skeletons';
+import SEOHead from '../components/common/SEOHead';
 
 const AcademicExplorePage = () => {
   const { user, isAuthenticated, savePreferences } = useAuth();
@@ -225,6 +226,11 @@ const AcademicExplorePage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 pb-24 transition-colors">
+      <SEOHead
+        title="Explore Academic Courses & Notes | GenZ Notes"
+        description="Browse college courses, engineering programs, degree subjects and semester notes across universities on GenZ Notes."
+        canonical="https://genznotes.in/explore"
+      />
       {/* Top Header / Breadcrumb */}
       <section className="border-b border-[#E3DED5] dark:border-neutral-800 bg-[#EEEAE3]/60 dark:bg-[#171717] py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -14,6 +14,7 @@ import {
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { OrdersSkeleton } from '../components/common/Skeletons';
+import SEOHead from '../components/common/SEOHead';
 
 const ProfilePage = () => {
   const { user, logout, savePreferences } = useAuth();
@@ -180,6 +181,7 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen bg-[#141414] text-gray-100 transition-colors py-8">
+      <SEOHead title="My Profile & Settings | GenZ Notes" noindex={true} />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Profile Card Header */}
         <div className="bg-white dark:bg-[#202020] rounded-2xl border border-gray-200 dark:border-neutral-800 p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 shadow-sm">

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { AlertCircle, ShieldCheck, Sparkles, Loader2, Info } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Logo from '../components/common/Logo';
+import SEOHead from '../components/common/SEOHead';
 
 const GoogleIcon = () => (
   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
@@ -172,6 +173,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 transition-colors">
+      <SEOHead title="Student Sign In | GenZ Notes" noindex={true} />
       <div className="max-w-md w-full space-y-6 bg-white dark:bg-[#1E1E1E] p-8 sm:p-10 rounded-3xl border border-[#E3DED5] dark:border-neutral-800 shadow-xl relative overflow-hidden">
         {/* Brand Header */}
         <div className="text-center">

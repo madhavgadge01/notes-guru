@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import SEOHead from '../components/common/SEOHead';
 
 const HomePage = () => {
   const { user } = useAuth();
@@ -149,8 +150,39 @@ const HomePage = () => {
     navigate(`/available-subjects?semesterId=${selectedSemesterId}&collegeId=${selectedCollegeId}&courseId=${selectedCourseId}`);
   };
 
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'GenZ Notes',
+      url: 'https://genznotes.in',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://genznotes.in/search?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'EducationalOrganization',
+      name: 'GenZ Notes',
+      url: 'https://genznotes.in',
+      logo: 'https://genznotes.in/logo.png',
+      description:
+        'Syllabus-aligned college notes, previous year question solutions, unit summaries, and exam preparation material for university students.',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 flex flex-col transition-colors">
+      <SEOHead
+        title="GenZ Notes — Exam Tomorrow? GenZNotes Today | College Study Notes Marketplace"
+        description="Access syllabus-aligned college study notes, previous year question solutions, unit summaries, and digital exam preparation guides for top universities across India."
+        canonical="https://genznotes.in/"
+        ogTitle="GenZ Notes — Exam Tomorrow? GenZNotes Today"
+        ogDescription="Syllabus-mapped academic study material, unit notes, and exam night clarity for college students."
+        jsonLd={jsonLd}
+      />
       {/* HERO SECTION */}
       <section className="relative overflow-hidden pt-12 sm:pt-20 pb-16 sm:pb-24 border-b border-[#E3DED5] dark:border-neutral-800">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">

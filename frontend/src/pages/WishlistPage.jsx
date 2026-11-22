@@ -5,6 +5,7 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { WishlistSkeleton } from '../components/common/Skeletons';
 import EmptyState from '../components/common/EmptyState';
+import SEOHead from '../components/common/SEOHead';
 
 const WishlistPage = () => {
   const { isAuthenticated } = useAuth();
@@ -64,6 +65,7 @@ const WishlistPage = () => {
 
   return (
     <div className="min-h-screen bg-[#141414] text-gray-100 transition-colors py-8">
+      <SEOHead title="My Wishlist | GenZ Notes" noindex={true} />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Header */}
         <div className="pb-4 border-b border-gray-200 dark:border-neutral-800 flex items-center justify-between">

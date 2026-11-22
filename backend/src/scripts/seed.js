@@ -85,6 +85,16 @@ const seedData = async () => {
       isActive: true,
     });
 
+    const ignou = await College.create({
+      name: 'Indira Gandhi National Open University (IGNOU)',
+      code: 'IGNOU',
+      description: "India's premier national open university offering accredited distance and online degrees across multiple disciplines.",
+      logo: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=120&q=80',
+      location: 'New Delhi, India',
+      order: 4,
+      isActive: true,
+    });
+
     console.log('Creating Courses...');
     const dtuCse = await Course.create({
       collegeId: dtu._id,
@@ -112,6 +122,17 @@ const seedData = async () => {
       code: 'CE',
       description: 'Four-year degree program in Mumbai University focused on systems design, software principles, and theory of computation.',
       durationYears: 4,
+      order: 1,
+      isActive: true,
+    });
+
+    const ignouBca = await Course.create({
+      collegeId: ignou._id,
+      name: 'Bachelor of Computer Applications',
+      code: 'BCA',
+      description: 'Three-year undergraduate program covering computer hardware, software fundamentals, programming in C/C++, DBMS, and web technologies.',
+      durationYears: 3,
+      academicStructure: 'semester',
       order: 1,
       isActive: true,
     });
@@ -846,6 +867,147 @@ const seedData = async () => {
             <div class="note-chapter">
               <h1 class="chapter-title">Recursion Tree Analysis</h1>
               <p>Locked premium block content for advanced divide-and-conquer recurrences.</p>
+            </div>
+          `,
+          isLockedPreview: true,
+        },
+      ],
+      status: 'published',
+      isPublished: true,
+      order: 1,
+      createdBy: adminUser._id,
+      updatedBy: adminUser._id,
+    });
+
+    console.log('Creating IGNOU BCA Semesters, Subjects, Blocks & Notes...');
+    const ignouSemesters = [];
+    for (let i = 1; i <= 6; i++) {
+      const iSem = await Semester.create({
+        courseId: ignouBca._id,
+        collegeId: ignou._id,
+        semesterNumber: i,
+        name: `Semester ${i}`,
+        price: 199,
+        discountedPrice: 99,
+        packageDescription: `Complete unit-wise study notes and solved assignments for IGNOU BCA Semester ${i}.`,
+        order: i,
+        isActive: true,
+      });
+      ignouSemesters.push(iSem);
+    }
+
+    const bcs011 = await Subject.create({
+      semesterId: ignouSemesters[0]._id,
+      courseId: ignouBca._id,
+      collegeId: ignou._id,
+      name: 'Computer Basics and PC Software',
+      code: 'BCS-011',
+      description: 'Foundational computer hardware architecture, operating system concepts, word processing, spreadsheets, presentation software, and internet basics.',
+      price: 99,
+      discountedPrice: 49,
+      order: 1,
+      isActive: true,
+    });
+
+    const bcs012 = await Subject.create({
+      semesterId: ignouSemesters[0]._id,
+      courseId: ignouBca._id,
+      collegeId: ignou._id,
+      name: 'Basic Mathematics',
+      code: 'BCS-012',
+      description: 'Determinants, matrices, mathematical induction, sequence and series, coordinate geometry, vectors, and differential/integral calculus.',
+      price: 99,
+      discountedPrice: 49,
+      order: 2,
+      isActive: true,
+    });
+
+    const ignouBlock1 = await Block.create({
+      subjectId: bcs011._id,
+      semesterId: ignouSemesters[0]._id,
+      courseId: ignouBca._id,
+      collegeId: ignou._id,
+      blockNumber: 1,
+      name: 'Basics of Computer Hardware',
+      description: 'Computer fundamentals, CPU organization, memory hierarchy, and peripherals.',
+      price: 39,
+      discountedPrice: 29,
+      order: 1,
+      isActive: true,
+    });
+
+    const ignouUnit1 = await Unit.create({
+      blockId: ignouBlock1._id,
+      subjectId: bcs011._id,
+      semesterId: ignouSemesters[0]._id,
+      courseId: ignouBca._id,
+      collegeId: ignou._id,
+      unitNumber: 1,
+      title: 'Computer Fundamentals & Hardware Architecture',
+      description: 'Von Neumann architecture, CPU components, system buses, and computer classifications.',
+      price: 29,
+      discountedPrice: 19,
+      order: 1,
+      isPublished: true,
+    });
+
+    await Note.create({
+      unitId: ignouUnit1._id,
+      blockId: ignouBlock1._id,
+      subjectId: bcs011._id,
+      semesterId: ignouSemesters[0]._id,
+      courseId: ignouBca._id,
+      collegeId: ignou._id,
+      title: 'BCS-011 Unit 1: Computer Fundamentals & Architecture Notes',
+      type: 'normal',
+      description: 'Complete high-yield revision notes covering von Neumann architecture, CPU registers, system buses, and computer classifications.',
+      price: 19,
+      discountedPrice: 9,
+      previewPageCount: 2,
+      pageCount: 3,
+      pages: [
+        {
+          pageNumber: 1,
+          title: 'Von Neumann Architecture & CPU Organization',
+          contentHtml: `
+            <div class="note-chapter">
+              <span class="chapter-badge">IGNOU BCS-011 • UNIT 1</span>
+              <h1 class="chapter-title">Von Neumann Computer Model</h1>
+              <p>The von Neumann architecture describes a theoretical computer design where instructions and data share a common memory space and bus system.</p>
+              <h3>Core Subsystems:</h3>
+              <ul>
+                <li><strong>Central Processing Unit (CPU)</strong>: Contains the Arithmetic Logic Unit (ALU) and Control Unit (CU).</li>
+                <li><strong>Memory Unit</strong>: Holds data and instructions sequentially.</li>
+                <li><strong>Input/Output Mechanism</strong>: Interfaces external devices with internal registers.</li>
+              </ul>
+            </div>
+          `,
+          isLockedPreview: false,
+        },
+        {
+          pageNumber: 2,
+          title: 'System Bus Architecture',
+          contentHtml: `
+            <div class="note-chapter">
+              <h1 class="chapter-title">System Bus Structures</h1>
+              <p>A bus is a collection of parallel wires that transmits electrical signals between computer components.</p>
+              <h3>Three Primary System Buses:</h3>
+              <ol>
+                <li><strong>Data Bus</strong>: Bidirectional bus carrying raw data values between CPU and memory.</li>
+                <li><strong>Address Bus</strong>: Unidirectional bus specifying memory addresses to read from or write to.</li>
+                <li><strong>Control Bus</strong>: Coordinates read/write timing signals, clock pulses, and interrupts.</li>
+              </ol>
+            </div>
+          `,
+          isLockedPreview: false,
+        },
+        {
+          pageNumber: 3,
+          title: 'Instruction Cycle Execution',
+          contentHtml: `
+            <div class="note-chapter">
+              <h1 class="chapter-title">The Fetch-Decode-Execute Cycle</h1>
+              <p>Locked preview section covering detailed register transfer operations during instruction fetch and decode.</p>
             </div>
           `,
           isLockedPreview: true,
