@@ -151,7 +151,7 @@ const HelpSupportWidget = () => {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-gradient-to-r from-brand-500 to-coral-500 text-white font-bold text-xs shadow-sunset hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 group"
+        className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-30 md:z-40 flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-gradient-to-r from-brand-500 to-coral-500 text-white font-bold text-xs shadow-sunset hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 group"
         title="Help & Support"
         aria-label="Open Help & Support"
       >

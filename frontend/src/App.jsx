@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
+import MobileTabBar from './components/common/MobileTabBar';
 import SingleDeviceAlertModal from './components/common/SingleDeviceAlertModal';
 import HelpSupportWidget from './components/common/HelpSupportWidget';
 import { useAuth } from './context/AuthContext';
@@ -38,7 +39,7 @@ const AppContent = () => {
     <div className="flex flex-col min-h-screen bg-[#F5F3EF] dark:bg-[#171717] text-[#242321] dark:text-gray-100 font-sans transition-colors">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 pb-16 md:pb-0">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/available-subjects" element={<SubjectListingPage />} />
@@ -74,6 +75,9 @@ const AppContent = () => {
       </main>
 
       {!isReaderPage && <Footer />}
+
+      {/* Apple-grade Mobile Navigation Tab Bar (Hidden on Desktop & Reader) */}
+      <MobileTabBar />
 
       {/* Website-Wide Help & Support Floating Widget (Hidden on Reader & Fullscreen) */}
       <HelpSupportWidget />

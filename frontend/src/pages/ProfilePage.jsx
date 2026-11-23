@@ -180,20 +180,20 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#141414] text-gray-100 transition-colors py-8">
+    <div className="min-h-screen bg-[#F5F3EF] dark:bg-[#141414] text-[#242321] dark:text-gray-100 transition-colors py-6 sm:py-8 pb-24 md:pb-12">
       <SEOHead title="My Profile & Settings | GenZ Notes" noindex={true} />
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         {/* Profile Card Header */}
-        <div className="bg-white dark:bg-[#202020] rounded-2xl border border-gray-200 dark:border-neutral-800 p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 shadow-sm">
+        <div className="bg-[#FAF9F6] dark:bg-[#1E1E1E] rounded-2xl sm:rounded-3xl border border-[#E3DED5] dark:border-neutral-800 p-5 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-5 sm:gap-6 shadow-sm">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-500 to-coral-500 text-white flex items-center justify-center font-black text-2xl shadow-sunset">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-500 to-coral-500 text-white flex items-center justify-center font-black text-2xl shadow-sunset flex-shrink-0">
               {user?.name?.charAt(0)?.toUpperCase() || 'S'}
             </div>
-            <div className="text-center sm:text-left">
-              <h1 className="text-xl sm:text-2xl font-black text-gray-950 dark:text-white">
+            <div className="text-center sm:text-left min-w-0">
+              <h1 className="text-xl sm:text-2xl font-black text-[#242321] dark:text-white truncate">
                 {user?.name}
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{user?.email}</p>
+              <p className="text-xs text-[#77736C] dark:text-gray-400 mt-0.5 truncate">{user?.email}</p>
               <div className="flex items-center gap-2 mt-2">
                 <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" /> Single-Device Active Session
@@ -204,7 +204,7 @@ const ProfilePage = () => {
 
           <button
             onClick={logout}
-            className="px-4 py-2 rounded-xl text-xs font-bold text-red-600 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-900/40 flex items-center gap-1.5 transition"
+            className="w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl text-xs font-bold text-red-600 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/50 border border-red-200 dark:border-red-900/40 flex items-center gap-1.5 transition active:scale-95"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
@@ -212,46 +212,46 @@ const ProfilePage = () => {
         </div>
 
         {/* Tab Selector */}
-        <div className="flex items-center gap-2 border-b border-gray-200 dark:border-neutral-800 text-xs font-bold pb-2 overflow-x-auto">
+        <div className="flex items-center gap-2 border-b border-[#E3DED5] dark:border-neutral-800 text-xs font-bold pb-2 overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`px-4 py-2 rounded-xl transition ${
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap active:scale-95 ${
               activeTab === 'profile'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                : 'text-[#77736C] dark:text-gray-400 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800'
             }`}
           >
             Profile Info
           </button>
           <button
             onClick={() => setActiveTab('academics')}
-            className={`px-4 py-2 rounded-xl transition ${
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap active:scale-95 ${
               activeTab === 'academics'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                : 'text-[#77736C] dark:text-gray-400 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800'
             }`}
           >
             Academic Preferences
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`px-4 py-2 rounded-xl transition ${
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap active:scale-95 ${
               activeTab === 'orders'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                : 'text-[#77736C] dark:text-gray-400 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800'
             }`}
           >
             Purchase History
           </button>
           <button
             onClick={() => setActiveTab('security')}
-            className={`px-4 py-2 rounded-xl transition ${
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap active:scale-95 ${
               activeTab === 'security'
                 ? 'bg-brand-500 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                : 'text-[#77736C] dark:text-gray-400 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800'
             }`}
           >
-            Change Password
+            Security & Password
           </button>
         </div>
 

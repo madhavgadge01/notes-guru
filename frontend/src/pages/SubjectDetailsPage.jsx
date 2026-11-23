@@ -144,7 +144,7 @@ const SubjectDetailsPage = () => {
                 <Link
                   key={block._id}
                   to={`/block/${block._id}`}
-                  className="group w-full p-5 sm:p-6 bg-[#FAF9F6] hover:bg-[#EEEAE3] dark:bg-[#1A1A1A] dark:hover:bg-[#202020] border border-[#E3DED5] hover:border-[#D6D0C5] dark:border-neutral-800 dark:hover:border-neutral-700 rounded-2xl transition duration-150 flex items-center justify-between gap-4 shadow-sm"
+                  className="group w-full p-4 sm:p-6 bg-[#FAF9F6] hover:bg-[#EEEAE3] dark:bg-[#1A1A1A] dark:hover:bg-[#202020] border border-[#E3DED5] hover:border-[#D6D0C5] dark:border-neutral-800 dark:hover:border-neutral-700 rounded-2xl transition duration-150 flex items-center justify-between gap-4 shadow-sm active:scale-[0.98]"
                 >
                   <div className="space-y-1.5 flex-1 pr-4">
                     <h3 className="text-base sm:text-lg font-bold text-[#242321] group-hover:text-[#DE8E5C] dark:text-white dark:group-hover:text-[#DE8E5C] transition">

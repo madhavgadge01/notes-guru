@@ -5,7 +5,7 @@ import { ShieldCheck, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#EEEAE3] dark:bg-[#141414] border-t border-[#E3DED5] dark:border-neutral-800 transition-colors pt-12 pb-8">
+    <footer className="bg-[#EEEAE3] dark:bg-[#141414] border-t border-[#E3DED5] dark:border-neutral-800 transition-colors pt-12 pb-20 md:pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand Col */}

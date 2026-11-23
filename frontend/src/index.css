@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply antialiased text-[#242321] bg-[#F5F3EF];
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
@@ -11,6 +20,22 @@
   .dark body {
     @apply bg-[#171717] text-gray-100;
   }
+}
+
+/* iOS-style spring drawer animation */
+@keyframes apple-sheet-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-apple-sheet {
+  animation: apple-sheet-down 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Realistic Skeleton Shimmer Animation */

@@ -188,18 +188,18 @@ const HomePage = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           {/* Brand Tagline Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF9F6] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-800 text-xs font-semibold text-[#DE8E5C] shadow-sm">
-            
+            <span className="w-1.5 h-1.5 rounded-full bg-[#DE8E5C] animate-pulse" />
             <span>Exam Tomorrow? GenZNotes Today.</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#242321] dark:text-white tracking-tight leading-[1.15] max-w-3xl mx-auto">
+          <h1 className="text-[28px] xs:text-3xl sm:text-5xl md:text-6xl font-black text-[#242321] dark:text-white tracking-tight leading-[1.18] sm:leading-[1.15] max-w-3xl mx-auto">
             Syllabus-Mapped College Notes for{' '}
             <span className="text-[#DE8E5C]">Exam Night Clarity</span>
           </h1>
 
           {/* Short, Meaningful Description */}
-          <p className="text-sm sm:text-base text-[#77736C] dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-base text-[#77736C] dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-1 sm:px-0">
             Stop sorting through unorganized drives and scattered PDFs. Discover verified,
             concise academic notes organized precisely by your university, course, semester, and unit.
           </p>
@@ -208,7 +208,7 @@ const HomePage = () => {
           <div className="pt-4 max-w-4xl mx-auto">
             <form
               onSubmit={handleFindSubjects}
-              className="bg-[#FAF9F6] dark:bg-[#1E1E1E] p-3 sm:p-4 rounded-2xl border border-[#E3DED5] dark:border-neutral-800 shadow-md"
+              className="bg-[#FAF9F6] dark:bg-[#1E1E1E] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-[#E3DED5] dark:border-neutral-800 shadow-md sm:shadow-lg transition"
             >
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center text-left">
                 {/* 1. College Dropdown */}
@@ -217,7 +217,7 @@ const HomePage = () => {
                     1. College
                   </label>
                   {loadingColleges ? (
-                    <div className="skeleton-shimmer h-[38px] w-full rounded-xl" />
+                    <div className="skeleton-shimmer h-11 sm:h-[38px] w-full rounded-xl" />
                   ) : (
                     <select
                       value={selectedCollegeId}
@@ -225,7 +225,7 @@ const HomePage = () => {
                         setSelectedCollegeId(e.target.value);
                         setValidationError('');
                       }}
-                      className="w-full px-3 py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-xs sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] transition"
+                      className="w-full h-11 sm:h-auto px-3.5 py-2.5 sm:py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-sm sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] transition"
                     >
                       <option value="">Select College...</option>
                       {colleges.map((col) => (
@@ -243,7 +243,7 @@ const HomePage = () => {
                     2. Course
                   </label>
                   {loadingCourses ? (
-                    <div className="skeleton-shimmer h-[38px] w-full rounded-xl" />
+                    <div className="skeleton-shimmer h-11 sm:h-[38px] w-full rounded-xl" />
                   ) : (
                     <select
                       value={selectedCourseId}
@@ -252,7 +252,7 @@ const HomePage = () => {
                         setValidationError('');
                       }}
                       disabled={!selectedCollegeId}
-                      className="w-full px-3 py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-xs sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] disabled:opacity-50 transition"
+                      className="w-full h-11 sm:h-auto px-3.5 py-2.5 sm:py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-sm sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] disabled:opacity-50 transition"
                     >
                       <option value="">Select Course...</option>
                       {courses.map((crs) => (
@@ -270,7 +270,7 @@ const HomePage = () => {
                     3. {isYearCourse ? 'Year' : 'Semester'}
                   </label>
                   {loadingSemesters ? (
-                    <div className="skeleton-shimmer h-[38px] w-full rounded-xl" />
+                    <div className="skeleton-shimmer h-11 sm:h-[38px] w-full rounded-xl" />
                   ) : (
                     <select
                       value={selectedSemesterId}
@@ -279,7 +279,7 @@ const HomePage = () => {
                         setValidationError('');
                       }}
                       disabled={!selectedCourseId}
-                      className="w-full px-3 py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-xs sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] disabled:opacity-50 transition"
+                      className="w-full h-11 sm:h-auto px-3.5 py-2.5 sm:py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-sm sm:text-sm text-[#242321] dark:text-white focus:outline-none focus:border-[#DE8E5C] disabled:opacity-50 transition"
                     >
                       <option value="">Select {isYearCourse ? 'Year' : 'Semester'}...</option>
                       {semesters.map((sem) => (
@@ -295,7 +295,7 @@ const HomePage = () => {
                 <div className="sm:col-span-2 pt-2 sm:pt-4">
                   <button
                     type="submit"
-                    className="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-white bg-[rgb(222,142,92)] hover:bg-[rgb(208,128,78)] transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95"
+                    className="w-full h-11 sm:h-auto py-2.5 px-4 rounded-xl text-sm sm:text-sm font-bold text-white bg-gradient-to-r from-brand-500 to-coral-500 hover:from-brand-600 hover:to-coral-600 transition shadow-sunset flex items-center justify-center gap-1.5 active:scale-[0.98]"
                   >
                     <Search className="w-4 h-4" />
                     <span>Find</span>
@@ -313,17 +313,17 @@ const HomePage = () => {
           </div>
 
           {/* Trust Highlights */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-[#77736C] dark:text-gray-400 font-medium">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-2.5 sm:gap-8 text-xs text-[#77736C] dark:text-gray-400 font-medium">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF9F6] dark:bg-neutral-900/60 border border-[#E3DED5]/60 dark:border-neutral-800 sm:border-0 sm:bg-transparent sm:p-0">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <span>Verified University Curricula</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF9F6] dark:bg-neutral-900/60 border border-[#E3DED5]/60 dark:border-neutral-800 sm:border-0 sm:bg-transparent sm:p-0">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <span>Free Previews on Every Note</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF9F6] dark:bg-neutral-900/60 border border-[#E3DED5]/60 dark:border-neutral-800 sm:border-0 sm:bg-transparent sm:p-0">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
               <span>Distraction-Free Vertical Reader</span>
             </div>
           </div>
@@ -345,10 +345,10 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Step 1 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 transition">
-              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 shadow-sm transition active:scale-[0.99]">
+              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4 shadow-sm">
                 01
               </div>
               <h4 className="text-base font-bold text-[#242321] dark:text-white mb-1.5">
@@ -360,8 +360,8 @@ const HomePage = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 transition">
-              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 shadow-sm transition active:scale-[0.99]">
+              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4 shadow-sm">
                 02
               </div>
               <h4 className="text-base font-bold text-[#242321] dark:text-white mb-1.5">
@@ -373,8 +373,8 @@ const HomePage = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 transition">
-              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1D1D1D] border border-[#E3DED5] dark:border-neutral-800 shadow-sm transition active:scale-[0.99]">
+              <div className="w-9 h-9 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 text-[#DE8E5C] flex items-center justify-center font-black text-sm mb-4 shadow-sm">
                 03
               </div>
               <h4 className="text-base font-bold text-[#242321] dark:text-white mb-1.5">
@@ -403,9 +403,9 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start">
-              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start shadow-sm transition active:scale-[0.99]">
+              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0 shadow-sm">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div className="space-y-1">
@@ -418,8 +418,8 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start">
-              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start shadow-sm transition active:scale-[0.99]">
+              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0 shadow-sm">
                 <Layers className="w-5 h-5" />
               </div>
               <div className="space-y-1">
@@ -432,8 +432,8 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start">
-              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start shadow-sm transition active:scale-[0.99]">
+              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0 shadow-sm">
                 <Zap className="w-5 h-5" />
               </div>
               <div className="space-y-1">
@@ -446,8 +446,8 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start">
-              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0">
+            <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#FAF9F6] dark:bg-[#1A1A1A] border border-[#E3DED5] dark:border-neutral-800 flex gap-4 items-start shadow-sm transition active:scale-[0.99]">
+              <div className="w-10 h-10 rounded-xl bg-[#EEEAE3] dark:bg-neutral-800 flex items-center justify-center text-[#DE8E5C] flex-shrink-0 shadow-sm">
                 <FileCheck className="w-5 h-5" />
               </div>
               <div className="space-y-1">
@@ -478,7 +478,7 @@ const HomePage = () => {
                 <button
                   type="button"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[rgb(222,142,92)] hover:bg-[rgb(208,128,78)] transition shadow-sm"
+                  className="w-full sm:w-auto h-11 sm:h-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-brand-500 to-coral-500 hover:from-brand-600 hover:to-coral-600 transition shadow-sunset active:scale-[0.98]"
                 >
                   <Search className="w-4 h-4" />
                   <span>Find Notes for Your Course</span>

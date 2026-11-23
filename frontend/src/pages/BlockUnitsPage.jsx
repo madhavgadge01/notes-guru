@@ -184,7 +184,7 @@ const BlockUnitsPage = () => {
                         <Link
                           key={note._id}
                           to={`/reader/${note._id}`}
-                          className="flex items-center justify-between p-3 rounded-xl bg-[#EEEAE3] dark:bg-neutral-900 hover:bg-[#E5E0D7] dark:hover:bg-neutral-800/80 border border-[#E3DED5] dark:border-neutral-800 text-xs font-semibold text-[#242321] dark:text-white hover:text-[#DE8E5C] transition"
+                          className="flex items-center justify-between p-3 rounded-xl bg-[#EEEAE3] dark:bg-neutral-900 hover:bg-[#E5E0D7] dark:hover:bg-neutral-800/80 border border-[#E3DED5] dark:border-neutral-800 text-xs font-semibold text-[#242321] dark:text-white hover:text-[#DE8E5C] transition active:scale-[0.98]"
                         >
                           <div className="flex items-center gap-2.5 truncate">
                             <BookOpen className="w-4 h-4 text-[#DE8E5C] flex-shrink-0" />

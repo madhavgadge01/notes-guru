@@ -195,82 +195,158 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Apple-Grade Sheet with Translucent Blur & Inset Grouping) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FAF9F6] dark:bg-[#1C1C1C] border-b border-[#E3DED5] dark:border-neutral-800 p-4 space-y-4">
-          <form onSubmit={handleSearchSubmit} className="relative">
-            <Search className="w-4 h-4 text-[#77736C] absolute left-3 top-3 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search notes, subjects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-xs text-[#242321] dark:text-white placeholder-[#77736C]"
-            />
-          </form>
+        <>
+          {/* Backdrop Blur Overlay */}
+          <div
+            className="fixed inset-0 top-16 bg-black/40 backdrop-blur-sm z-30 lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-          {isAuthenticated ? (
-            <div className="space-y-2">
-              <div className="px-2 py-1 text-xs">
-                <p className="font-bold text-[#242321] dark:text-white">{user?.name}</p>
-                <p className="text-[11px] text-[#77736C] dark:text-gray-400">{user?.email}</p>
-              </div>
+          {/* Drawer Sheet */}
+          <div className="relative z-40 lg:hidden bg-[#FAF9F6]/95 dark:bg-[#1C1C1C]/95 backdrop-blur-2xl border-b border-[#E3DED5] dark:border-neutral-800 rounded-b-3xl shadow-2xl p-4 space-y-3.5 animate-apple-sheet">
+            {/* Quick Search */}
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <Search className="w-4 h-4 text-[#77736C] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search notes, subjects, units..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 h-11 bg-[#EEEAE3] dark:bg-neutral-900 border border-[#E3DED5] dark:border-neutral-700 rounded-xl text-sm text-[#242321] dark:text-white placeholder-[#77736C] focus:outline-none focus:border-[#DE8E5C] transition"
+              />
+            </form>
 
-              <div className="flex flex-col space-y-1 pt-1 border-t border-[#E3DED5] dark:border-neutral-800">
-                <Link
-                  to="/my-notes"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800 rounded-xl"
-                >
-                  <BookOpen className="w-4 h-4 text-[#DE8E5C]" />
-                  <span>My Notes</span>
-                </Link>
+            {isAuthenticated ? (
+              <div className="space-y-3">
+                {/* User Info Header Card */}
+                <div className="flex items-center gap-3 p-3 bg-white/60 dark:bg-neutral-900/60 rounded-2xl border border-[#E3DED5]/60 dark:border-neutral-800">
+                  <div className="w-10 h-10 rounded-full bg-[#DE8E5C] text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
+                    {user?.name?.charAt(0)?.toUpperCase() || 'S'}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-sm text-[#242321] dark:text-white truncate">
+                      {user?.name}
+                    </p>
+                    <p className="text-[11px] text-[#77736C] dark:text-gray-400 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    Active
+                  </span>
+                </div>
 
-                <Link
-                  to="/wishlist"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800 rounded-xl"
-                >
-                  <Heart className="w-4 h-4 text-[#DE8E5C]" />
-                  <span>Wishlist</span>
-                </Link>
+                {/* Inset Grouped Navigation List (iOS Settings Style) */}
+                <div className="bg-white/60 dark:bg-neutral-900/60 rounded-2xl border border-[#E3DED5]/60 dark:border-neutral-800 divide-y divide-[#E3DED5]/50 dark:divide-neutral-800 overflow-hidden">
+                  <Link
+                    to="/my-notes"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3]/80 dark:hover:bg-neutral-800 active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#DE8E5C]/10 text-[#DE8E5C] flex items-center justify-center">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      <span>My Notes</span>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-[#77736C] -rotate-90" />
+                  </Link>
 
-                <Link
-                  to="/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800 rounded-xl"
-                >
-                  <Settings className="w-4 h-4 text-[#77736C]" />
-                  <span>Account Settings</span>
-                </Link>
-              </div>
+                  <Link
+                    to="/wishlist"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3]/80 dark:hover:bg-neutral-800 active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#DE8E5C]/10 text-[#DE8E5C] flex items-center justify-center">
+                        <Heart className="w-4 h-4" />
+                      </div>
+                      <span>Wishlist</span>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-[#77736C] -rotate-90" />
+                  </Link>
 
-              <div className="pt-2 border-t border-[#E3DED5] dark:border-neutral-800">
+                  <Link
+                    to="/ignou"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3]/80 dark:hover:bg-neutral-800 active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#DE8E5C]/10 text-[#DE8E5C] flex items-center justify-center">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      <span>IGNOU Study Material</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DE8E5C]/15 text-[#DE8E5C]">
+                      Hub
+                    </span>
+                  </Link>
+
+                  <Link
+                    to="/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3]/80 dark:hover:bg-neutral-800 active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#EEEAE3] dark:bg-neutral-800 text-[#77736C] flex items-center justify-center">
+                        <Settings className="w-4 h-4" />
+                      </div>
+                      <span>Account Settings</span>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-[#77736C] -rotate-90" />
+                  </Link>
+                </div>
+
+                {/* Sign Out Button */}
                 <button
                   type="button"
                   onClick={() => {
                     logout();
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-[#EEEAE3] dark:hover:bg-neutral-800 rounded-xl"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/15 rounded-xl transition active:scale-[0.98]"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
                 </button>
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2 pt-1">
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 text-xs font-bold text-white bg-[#DE8E5C] hover:bg-[#D0804E] rounded-xl shadow-sm flex items-center justify-center gap-2"
-              >
-                <span>Continue with Google</span>
-              </Link>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="space-y-3 pt-1">
+                {/* Guest Quick Navigation */}
+                <div className="bg-white/60 dark:bg-neutral-900/60 rounded-2xl border border-[#E3DED5]/60 dark:border-neutral-800 divide-y divide-[#E3DED5]/50 dark:divide-neutral-800 overflow-hidden">
+                  <Link
+                    to="/ignou"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#242321] dark:text-gray-200 hover:bg-[#EEEAE3]/80 dark:hover:bg-neutral-800 active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#DE8E5C]/10 text-[#DE8E5C] flex items-center justify-center">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      <span>IGNOU Study Material</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DE8E5C]/15 text-[#DE8E5C]">
+                      Hub
+                    </span>
+                  </Link>
+                </div>
+
+                {/* Primary CTA: Continue with Google */}
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full h-11 text-xs font-bold text-white bg-gradient-to-r from-brand-500 to-coral-500 hover:from-brand-600 hover:to-coral-600 rounded-xl shadow-sunset flex items-center justify-center gap-2 active:scale-[0.98] transition"
+                >
+                  <User className="w-4 h-4" />
+                  <span>Continue with Google</span>
+                </Link>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </header>
   );
