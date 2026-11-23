@@ -45,7 +45,7 @@ const getSemestersByCourse = async (req, res, next) => {
     const responseData = {
       success: true,
       count: semesters.length,
-      academicStructure: course?.academicStructure || 'semester',
+      academicStructure: course?.academicStructure || 'year',
       course,
       semesters,
     };

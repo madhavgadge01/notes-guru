@@ -29,6 +29,11 @@ const staticRoutes = [
     priority: '0.7',
     changefreq: 'weekly',
   },
+  {
+    path: '/academic',
+    priority: '0.7',
+    changefreq: 'weekly',
+  },
 ];
 
 const generateSitemap = () => {

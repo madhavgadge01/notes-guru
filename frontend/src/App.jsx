@@ -25,6 +25,7 @@ import IgnouCoursePage from './pages/IgnouCoursePage';
 import IgnouSemesterPage from './pages/IgnouSemesterPage';
 import IgnouSubjectPage from './pages/IgnouSubjectPage';
 import IgnouUnitPage from './pages/IgnouUnitPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const AppContent = () => {
   const { sessionAlertMessage, clearSessionAlert } = useAuth();
@@ -66,6 +67,9 @@ const AppContent = () => {
           <Route path="/ignou/:courseCode/:subjectCode/" element={<IgnouSubjectPage />} />
           <Route path="/ignou/:courseCode/:subjectCode/unit-:unitNum" element={<IgnouUnitPage />} />
           <Route path="/ignou/:courseCode/:subjectCode/unit-:unitNum/" element={<IgnouUnitPage />} />
+
+          {/* Catch-all Not Found Route */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 

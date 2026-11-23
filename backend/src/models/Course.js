@@ -26,12 +26,12 @@ const courseSchema = new mongoose.Schema(
     },
     durationYears: {
       type: Number,
-      default: 4,
+      default: 3,
     },
     academicStructure: {
       type: String,
       enum: ['semester', 'year'],
-      default: 'semester',
+      default: 'year',
       index: true,
     },
     order: {

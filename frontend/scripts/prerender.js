@@ -62,6 +62,13 @@ const generatePrerenderedPages = () => {
         'Choose your university, course, and semester to discover verified academic study notes and exam preparation material.',
       type: 'general',
     },
+    {
+      path: '/academic',
+      title: 'Explore College Courses & Subjects | GenZ Notes',
+      description:
+        'Choose your university, course, and semester to discover verified academic study notes and exam preparation material.',
+      type: 'general',
+    },
     ...routes,
   ];
 

@@ -74,7 +74,7 @@ const createCourse = async (req, res, next) => {
 
     const trimmedName = name.trim();
     const formattedCode = code ? code.trim().toUpperCase() : '';
-    const structure = academicStructure === 'year' ? 'year' : 'semester';
+    const structure = academicStructure === 'semester' ? 'semester' : 'year';
 
     // Check if course already exists (handles retries safely)
     let course = await Course.findOne({ collegeId, name: trimmedName });
@@ -85,7 +85,7 @@ const createCourse = async (req, res, next) => {
         name: trimmedName,
         code: formattedCode,
         description: description ? description.trim() : '',
-        durationYears: durationYears ? Number(durationYears) : (structure === 'year' ? 3 : 4),
+        durationYears: durationYears ? Number(durationYears) : (structure === 'semester' ? 4 : 3),
         academicStructure: structure,
         order: order !== undefined ? Number(order) : 0,
         isActive: isActive !== undefined ? isActive : true,

@@ -90,7 +90,7 @@ import { TableSkeleton, CardGridSkeleton, ButtonSpinner } from '../components/co
   const [formParentSemesterId, setFormParentSemesterId] = useState('');
   const [formParentSubjectId, setFormParentSubjectId] = useState('');
   const [formParentBlockId, setFormParentBlockId] = useState('');
-  const [formAcademicStructure, setFormAcademicStructure] = useState('semester'); // 'semester' | 'year'
+  const [formAcademicStructure, setFormAcademicStructure] = useState('year'); // 'year' | 'semester'
 
   // Selected course details & structure helper
   const selectedCourse = courses.find((c) => c._id === filterCourseId);
@@ -401,7 +401,7 @@ import { TableSkeleton, CardGridSkeleton, ButtonSpinner } from '../components/co
     setFormParentBlockId(effBlockId);
 
     // Apply remembered pricing automatically (Requirement 4)
-    setFormAcademicStructure('semester');
+    setFormAcademicStructure('year');
     if (activeTab === 'semesters') {
       const parentCrs = courses.find((c) => c._id === effCourseId);
       const isYear = parentCrs?.academicStructure === 'year';
@@ -454,7 +454,7 @@ import { TableSkeleton, CardGridSkeleton, ButtonSpinner } from '../components/co
     setFormParentSemesterId(item.semesterId?._id || item.semesterId || filterSemesterId);
     setFormParentSubjectId(item.subjectId?._id || item.subjectId || filterSubjectId);
     setFormParentBlockId(item.blockId?._id || item.blockId || '');
-    setFormAcademicStructure(item.academicStructure || 'semester');
+    setFormAcademicStructure(item.academicStructure || 'year');
     setModalOpen(true);
   };
 
@@ -1725,42 +1725,6 @@ import { TableSkeleton, CardGridSkeleton, ButtonSpinner } from '../components/co
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       type="button"
-                      onClick={() => setFormAcademicStructure('semester')}
-                      className={`p-3.5 rounded-2xl border text-left transition-all duration-150 ${
-                        formAcademicStructure === 'semester'
-                          ? 'border-brand-500 dark:border-brand-500 bg-brand-50/70 dark:bg-[#141414] ring-2 ring-brand-500/20 dark:ring-brand-500/40 dark:shadow-[0_0_15px_rgba(242,140,82,0.18)]'
-                          : 'border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-[#181818] hover:border-gray-300 dark:hover:border-neutral-700'
-                      }`}
-                    >
-                      <div
-                        className={`text-xs font-bold flex items-center gap-2 ${
-                          formAcademicStructure === 'semester'
-                            ? 'text-brand-600 dark:text-brand-400'
-                            : 'text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        <span
-                          className={`w-2 h-2 rounded-full transition-all ${
-                            formAcademicStructure === 'semester'
-                              ? 'bg-brand-500 dark:bg-brand-400 shadow-[0_0_6px_rgba(242,140,82,0.8)] ring-2 ring-brand-500/20'
-                              : 'bg-gray-400 dark:bg-neutral-600'
-                          }`}
-                        />
-                        <span>Semester-Based</span>
-                      </div>
-                      <div
-                        className={`text-[11px] mt-1.5 leading-snug transition-colors ${
-                          formAcademicStructure === 'semester'
-                            ? 'text-gray-600 dark:text-gray-200'
-                            : 'text-gray-500 dark:text-gray-400'
-                        }`}
-                      >
-                        Automatically creates Semester 1 to Semester 6 by default.
-                      </div>
-                    </button>
-
-                    <button
-                      type="button"
                       onClick={() => setFormAcademicStructure('year')}
                       className={`p-3.5 rounded-2xl border text-left transition-all duration-150 ${
                         formAcademicStructure === 'year'
@@ -1792,6 +1756,42 @@ import { TableSkeleton, CardGridSkeleton, ButtonSpinner } from '../components/co
                         }`}
                       >
                         Automatically creates 1st Year, 2nd Year, 3rd Year by default.
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setFormAcademicStructure('semester')}
+                      className={`p-3.5 rounded-2xl border text-left transition-all duration-150 ${
+                        formAcademicStructure === 'semester'
+                          ? 'border-brand-500 dark:border-brand-500 bg-brand-50/70 dark:bg-[#141414] ring-2 ring-brand-500/20 dark:ring-brand-500/40 dark:shadow-[0_0_15px_rgba(242,140,82,0.18)]'
+                          : 'border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-[#181818] hover:border-gray-300 dark:hover:border-neutral-700'
+                      }`}
+                    >
+                      <div
+                        className={`text-xs font-bold flex items-center gap-2 ${
+                          formAcademicStructure === 'semester'
+                            ? 'text-brand-600 dark:text-brand-400'
+                            : 'text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        <span
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            formAcademicStructure === 'semester'
+                              ? 'bg-brand-500 dark:bg-brand-400 shadow-[0_0_6px_rgba(242,140,82,0.8)] ring-2 ring-brand-500/20'
+                              : 'bg-gray-400 dark:bg-neutral-600'
+                          }`}
+                        />
+                        <span>Semester-Based</span>
+                      </div>
+                      <div
+                        className={`text-[11px] mt-1.5 leading-snug transition-colors ${
+                          formAcademicStructure === 'semester'
+                            ? 'text-gray-600 dark:text-gray-200'
+                            : 'text-gray-500 dark:text-gray-400'
+                        }`}
+                      >
+                        Automatically creates Semester 1 to Semester 6 by default.
                       </div>
                     </button>
                   </div>
