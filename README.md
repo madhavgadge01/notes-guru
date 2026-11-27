@@ -13,7 +13,7 @@ The system consists of three distinct applications:
 
 1. **Student Frontend (`frontend/`)**: React.js + Vite + Tailwind CSS + Lucide Icons (Port 5173)
 2. **Admin Frontend (`admin/`)**: React.js + Vite + Tailwind CSS + Lucide Icons (Port 5174)
-3. **Backend API (`backend/`)**: Node.js + Express.js + MongoDB + Mongoose + JWT + bcrypt + Razorpay SDK (Port 5000)
+3. **Backend API (`backend/`)**: Node.js + Express.js + MongoDB + Mongoose + JWT + bcrypt + Cashfree PG SDK (Port 5000)
 
 ---
 
@@ -46,14 +46,14 @@ The system consists of three distinct applications:
 - Logging in on a new device immediately invalidates previous sessions.
 - Inactive devices receive a `401 SESSION_INVALIDATED` alert: *"Your account was logged in on another device. Please log in again."*
 
-### 6. Razorpay Payment & Multi-tier Entitlements
+### 6. Cashfree Payment & Multi-tier Entitlements
 - Purchases supported at four granular tiers:
   1. Complete Semester Package Pass (unlocks all subjects & units in that semester)
   2. Complete Subject Pass (unlocks all units under that subject)
   3. Individual Unit Pass (unlocks that unit's notes)
   4. Individual Note / Quick Note Pass
 - Prices are **always** validated against MongoDB server-side.
-- Payment signatures verified via `crypto.createHmac`. Supports live keys or test simulation.
+- Order & payment status verified server-side via Cashfree PG APIs, with HMAC-SHA256 webhook signature verification (`crypto.timingSafeEqual`).
 
 ### 7. Reading Progress & My Library
 - Automatic reading progress bookmarks track the last-read page.
@@ -123,7 +123,7 @@ Open [http://localhost:5174](http://localhost:5174) in your browser.
 
 ## 🧪 Automated End-to-End Verification Tests
 
-Run the comprehensive test suite verifying health checks, single-device login, academic hierarchy, content locking, Razorpay entitlement fulfillment, and admin authorization:
+Run the comprehensive test suite verifying health checks, single-device login, academic hierarchy, content locking, Cashfree entitlement fulfillment, and admin authorization:
 
 ```bash
 cd backend

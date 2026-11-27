@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import NotesReader from '../components/reader/NotesReader';
 import PurchaseModal from '../components/common/PurchaseModal';
 import { NotesReaderSkeleton } from '../components/common/Skeletons';
@@ -13,6 +13,7 @@ const NotesReaderPage = () => {
   const { noteId } = useParams();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [loading, setLoading] = useState(true);
   const [noteData, setNoteData] = useState(null);
@@ -68,6 +69,32 @@ const NotesReaderPage = () => {
   useEffect(() => {
     fetchNote();
   }, [noteId, isAuthenticated]);
+
+  // Complete verification automatically when returning from a full-page Cashfree redirect
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const cfOrderId = params.get('cf_order_id');
+    if (!cfOrderId || !isAuthenticated) return;
+
+    let cancelled = false;
+    const verifyRedirectOrder = async () => {
+      try {
+        await api.post('/orders/verify', { cashfreeOrderId: cfOrderId });
+      } catch (err) {
+        console.warn('Cashfree return verification:', err.response?.data?.message || err.message);
+      } finally {
+        if (!cancelled) {
+          navigate(location.pathname, { replace: true });
+          fetchNote();
+        }
+      }
+    };
+
+    verifyRedirectOrder();
+    return () => {
+      cancelled = true;
+    };
+  }, [location.search, isAuthenticated]);
 
   // Handle page change: Save reading progress to MongoDB
   const handlePageChange = async (newPageNum, totalPages) => {

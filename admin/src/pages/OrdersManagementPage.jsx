@@ -40,7 +40,7 @@ const OrdersManagementPage = () => {
   return (
     <div className="flex-1 min-h-screen bg-[#FBF9F7] dark:bg-[#141414] transition-colors pb-12">
       <AdminHeader
-        title="Orders & Razorpay Transactions"
+        title="Orders & Cashfree Transactions"
         subtitle="Live payment verification logs, order IDs, and entitlement fulfillments"
       />
 
@@ -50,7 +50,7 @@ const OrdersManagementPage = () => {
             <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
             <input
               type="text"
-              placeholder="Search by Order ID, Razorpay ID, item..."
+              placeholder="Search by Order ID, Cashfree ID, item..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#1E1E1E] border border-gray-200 dark:border-neutral-800 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
@@ -84,7 +84,7 @@ const OrdersManagementPage = () => {
                   <th className="py-3 px-4">Student</th>
                   <th className="py-3 px-4">Item Type & Title</th>
                   <th className="py-3 px-4">Amount</th>
-                  <th className="py-3 px-4">Razorpay Payment ID</th>
+                  <th className="py-3 px-4">Cashfree Payment ID</th>
                   <th className="py-3 px-4">Status</th>
                   <th className="py-3 px-4 text-right">Date</th>
                 </tr>
@@ -120,7 +120,7 @@ const OrdersManagementPage = () => {
                         ₹{ord.amount}
                       </td>
                       <td className="py-3 px-4 font-mono text-[11px] text-gray-500">
-                        {ord.razorpayPaymentId || '—'}
+                        {ord.cashfreePaymentId || ord.razorpayPaymentId || '—'}
                       </td>
                       <td className="py-3 px-4">
                         <span

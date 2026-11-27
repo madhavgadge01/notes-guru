@@ -122,7 +122,7 @@ const AdminDashboardPage = () => {
               ₹{stats.totalRevenue?.toLocaleString('en-IN') || 0}
             </div>
             <span className="text-[10px] text-emerald-600 font-semibold block">
-              Direct Razorpay verified payments
+              Direct Cashfree verified payments
             </span>
           </div>
 

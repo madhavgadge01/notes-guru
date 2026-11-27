@@ -1,76 +1,67 @@
-const crypto = require('crypto');
 const Order = require('../models/Order');
-const Payment = require('../models/Payment');
-const Purchase = require('../models/Purchase');
+const { verifyCashfreeWebhookSignature } = require('../config/cashfree');
+const { fulfillPaidOrder } = require('../services/paymentService');
 
 /**
- * Razorpay Webhook Handler
- * Verifies webhook signature with RAZORPAY_WEBHOOK_SECRET
- * Idempotently processes payment.captured and order.paid events
+ * Cashfree Webhook Handler
+ * Verifies x-webhook-signature using HMAC-SHA256(timestamp + rawBody)
+ * Idempotently processes PAYMENT_SUCCESS_WEBHOOK and terminal failure events
  */
-const razorpayWebhook = async (req, res, next) => {
+const cashfreeWebhook = async (req, res, next) => {
   try {
-    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-    const signature = req.headers['x-razorpay-signature'];
+    const signature = req.headers['x-webhook-signature'];
+    const timestamp = req.headers['x-webhook-timestamp'];
 
-    if (webhookSecret) {
-      if (!signature) {
-        return res.status(400).json({ success: false, message: 'Missing Razorpay webhook signature header' });
-      }
-
-      const bodyData = req.rawBody ? req.rawBody.toString() : JSON.stringify(req.body);
-      const expectedDigest = crypto
-        .createHmac('sha256', webhookSecret)
-        .update(bodyData)
-        .digest('hex');
-
-      if (expectedDigest !== signature) {
-        return res.status(400).json({ success: false, message: 'Invalid Razorpay webhook signature' });
-      }
+    if (!signature || !timestamp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing Cashfree webhook signature or timestamp headers',
+      });
     }
 
-    const event = req.body?.event;
+    const rawBody = req.rawBody ? req.rawBody.toString('utf8') : JSON.stringify(req.body);
+    const isValid = verifyCashfreeWebhookSignature(signature, rawBody, timestamp);
 
-    // Handle payment.captured or order.paid
-    if (event === 'payment.captured' || event === 'order.paid') {
-      const payload = req.body.payload;
-      const paymentEntity = payload?.payment?.entity;
-      const razorpayOrderId = paymentEntity?.order_id || payload?.order?.entity?.id;
-      const razorpayPaymentId = paymentEntity?.id;
+    if (!isValid) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid Cashfree webhook signature',
+      });
+    }
 
-      if (razorpayOrderId) {
-        const order = await Order.findOne({ razorpayOrderId });
-        if (order && order.status !== 'paid') {
-          order.status = 'paid';
-          order.razorpayPaymentId = razorpayPaymentId || order.razorpayPaymentId;
-          order.paidAt = new Date();
-          await order.save();
+    const eventType = req.body?.type;
+    const data = req.body?.data || {};
+    const cfOrder = data.order || {};
+    const cfPayment = data.payment || {};
+    const cashfreeOrderId = cfOrder.order_id;
 
-          await Payment.create({
-            userId: order.userId,
-            orderId: order._id,
-            razorpayOrderId,
-            razorpayPaymentId: razorpayPaymentId || 'webhook_captured',
-            amount: order.amount,
-            currency: order.currency,
-            status: 'success',
+    if (!cashfreeOrderId) {
+      return res.status(200).json({ status: 'ok', received: true });
+    }
+
+    if (eventType === 'PAYMENT_SUCCESS_WEBHOOK' && cfPayment.payment_status === 'SUCCESS') {
+      const order = await Order.findOne({ cashfreeOrderId });
+      if (order) {
+        const paidAmount = Number(cfOrder.order_amount ?? cfPayment.payment_amount ?? 0);
+        if (paidAmount + 0.01 >= Number(order.amount)) {
+          await fulfillPaidOrder({
+            order,
+            cashfreeOrderId,
+            cashfreePaymentId: cfPayment.cf_payment_id,
+            paymentGroup: cfPayment.payment_group || '',
+            bankReference: cfPayment.bank_reference || '',
             rawPayload: req.body,
           });
-
-          await Purchase.findOneAndUpdate(
-            { userId: order.userId, itemType: order.itemType, itemId: order.itemId },
-            {
-              userId: order.userId,
-              itemType: order.itemType,
-              itemId: order.itemId,
-              orderId: order._id,
-              amount: order.amount,
-              purchasedAt: new Date(),
-            },
-            { upsert: true, new: true }
-          );
         }
       }
+    } else if (
+      eventType === 'PAYMENT_FAILED_WEBHOOK' ||
+      eventType === 'PAYMENT_USER_DROPPED_WEBHOOK'
+    ) {
+      await Order.findOneAndUpdate(
+        { cashfreeOrderId, status: 'created' },
+        { $set: { status: 'failed' } }
+      );
     }
 
     return res.status(200).json({ status: 'ok', received: true });
@@ -80,5 +71,5 @@ const razorpayWebhook = async (req, res, next) => {
 };
 
 module.exports = {
-  razorpayWebhook,
+  cashfreeWebhook,
 };

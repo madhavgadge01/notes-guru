@@ -38,16 +38,20 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: 'INR',
     },
-    razorpayOrderId: {
+    cashfreeOrderId: {
       type: String,
       default: '',
       index: true,
     },
-    razorpayPaymentId: {
+    cfOrderId: {
       type: String,
       default: '',
     },
-    razorpaySignature: {
+    cashfreePaymentId: {
+      type: String,
+      default: '',
+    },
+    paymentSessionId: {
       type: String,
       default: '',
     },
@@ -59,7 +63,7 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      default: 'razorpay',
+      default: 'cashfree',
     },
     paidAt: {
       type: Date,

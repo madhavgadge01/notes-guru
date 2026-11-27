@@ -62,7 +62,7 @@ const Footer = () => {
                 <span>+91 98765 43210 (10 AM - 7 PM)</span>
               </li>
               <li className="pt-2 text-[11px] text-[#77736C] dark:text-gray-500">
-                Payment transactions secured by Razorpay 256-bit SSL encryption.
+                Payment transactions secured by Cashfree 256-bit SSL encryption.
               </li>
             </ul>
           </div>

@@ -4,16 +4,19 @@ const { createOrder, verifyPaymentAndFulfill } = require('../services/paymentSer
 // Create order
 const createNewOrder = async (req, res, next) => {
   try {
-    const { itemType, itemId } = req.body;
+    const { itemType, itemId, returnPath } = req.body;
 
     if (!itemType || !itemId) {
       return res.status(400).json({
         success: false,
-        message: 'Item type (semester, subject, unit, note) and item ID are required',
+        message: 'Item type (semester, subject, block, unit, note) and item ID are required',
       });
     }
 
-    const orderData = await createOrder(req.user._id, itemType, itemId);
+    const orderData = await createOrder(req.user._id, itemType, itemId, {
+      returnPath,
+      requestOrigin: req.headers.origin,
+    });
 
     return res.status(201).json({
       success: true,
@@ -28,21 +31,19 @@ const createNewOrder = async (req, res, next) => {
 // Verify payment & fulfill entitlement
 const verifyOrderPayment = async (req, res, next) => {
   try {
-    const { orderId, razorpayOrderId, razorpayPaymentId, razorpaySignature } = req.body;
+    const { orderId, cashfreeOrderId } = req.body;
 
-    if (!orderId || !razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
+    if (!orderId && !cashfreeOrderId) {
       return res.status(400).json({
         success: false,
-        message: 'Order ID, Razorpay order ID, payment ID, and signature are required for verification',
+        message: 'Order ID or Cashfree Order ID is required for verification',
       });
     }
 
     const result = await verifyPaymentAndFulfill({
       userId: req.user._id,
       orderId,
-      razorpayOrderId,
-      razorpayPaymentId,
-      razorpaySignature,
+      cashfreeOrderId,
     });
 
     return res.status(200).json({

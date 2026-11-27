@@ -14,16 +14,21 @@ const paymentSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    razorpayOrderId: {
-      type: String,
-      required: true,
-    },
-    razorpayPaymentId: {
+    cashfreeOrderId: {
       type: String,
       required: true,
       index: true,
     },
-    razorpaySignature: {
+    cashfreePaymentId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+    paymentGroup: {
+      type: String,
+      default: '',
+    },
+    bankReference: {
       type: String,
       default: '',
     },

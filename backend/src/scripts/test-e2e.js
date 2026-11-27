@@ -150,7 +150,7 @@ const runTests = async () => {
     });
     console.log('✅ Content Protection Verified: Locked pages completely stripped of HTML on backend!');
 
-    // TEST 6: RAZORPAY ORDER & PURCHASE ENTITLEMENT
+    // TEST 6: CASHFREE ORDER & PURCHASE ENTITLEMENT
     console.log('\n[Test 6] Order Creation & Entitlement Fulfillment...');
     const orderRes = await makeRequest(
       '/api/orders/create',
@@ -162,21 +162,18 @@ const runTests = async () => {
     const orderId = orderRes.data.order._id;
     console.log(`✅ Order created: ${orderRes.data.orderNumber} for ₹${orderRes.data.amount}`);
 
-    // Simulate verified payment
+    // Verify payment via Cashfree API
     const verifyRes = await makeRequest(
       '/api/orders/verify',
       'POST',
       {
         orderId,
-        razorpayOrderId: orderRes.data.razorpayOrderId,
-        razorpayPaymentId: `pay_test_${Date.now()}`,
-        razorpaySignature: 'simulated_test_sig',
-        isMockPayment: true,
+        cashfreeOrderId: orderRes.data.cashfreeOrderId,
       },
       tokenD2
     );
     console.assert(verifyRes.status === 200, 'Payment verification failed');
-    console.log('✅ Payment signature verified. Entitlement granted!');
+    console.log('✅ Payment verified. Entitlement granted!');
 
     // Re-fetch the note with student tokenD2: ALL pages should now be unlocked!
     const notePurchasedView = await makeRequest(`/api/notes/${note1._id}`, 'GET', null, tokenD2);

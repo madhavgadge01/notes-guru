@@ -4,14 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 
-const loadRazorpayScript = () => {
+const loadCashfreeScript = () => {
   return new Promise((resolve) => {
-    if (window.Razorpay) {
+    if (window.Cashfree) {
       resolve(true);
       return;
     }
+    const existingScript = document.querySelector('script[src="https://sdk.cashfree.com/js/v3/cashfree.js"]');
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(Boolean(window.Cashfree)));
+      existingScript.addEventListener('error', () => resolve(false));
+      return;
+    }
     const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
     script.async = true;
     script.onload = () => resolve(true);
     script.onerror = () => resolve(false);
@@ -20,7 +26,7 @@ const loadRazorpayScript = () => {
 };
 
 const PurchaseModal = ({ isOpen, onClose, itemType, itemId, itemTitle, price, discountedPrice, onSuccess }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -42,74 +48,61 @@ const PurchaseModal = ({ isOpen, onClose, itemType, itemId, itemTitle, price, di
       setLoading(true);
       setError(null);
 
-      // Ensure Razorpay Checkout SDK is loaded
-      const isScriptLoaded = await loadRazorpayScript();
-      if (!isScriptLoaded || !window.Razorpay) {
-        throw new Error('Razorpay Checkout SDK failed to load. Please check your network connection.');
+      // Ensure Cashfree Checkout SDK v3 is loaded
+      const isScriptLoaded = await loadCashfreeScript();
+      if (!isScriptLoaded || !window.Cashfree) {
+        throw new Error('Cashfree Checkout SDK failed to load. Please check your network connection.');
       }
 
       // Step 1: Create Order on Backend (Backend calculates actual verified price from DB)
-      const res = await api.post('/orders/create', { itemType, itemId });
-      const { orderId, keyId, razorpayOrderId, amount, currency } = res.data;
+      const res = await api.post('/orders/create', {
+        itemType,
+        itemId,
+        returnPath: window.location.pathname,
+      });
+      const { orderId, cashfreeOrderId, paymentSessionId, cashfreeMode } = res.data;
 
-      const activeKey = keyId || import.meta.env.VITE_RAZORPAY_KEY_ID;
-      if (!activeKey) {
-        throw new Error('Razorpay Key ID is not configured. Please check environment variables.');
+      if (!paymentSessionId) {
+        throw new Error('Cashfree payment session could not be initialized.');
       }
 
-      // Step 2: Open Razorpay Checkout Interface
-      const options = {
-        key: activeKey,
-        amount: Math.round(amount * 100),
-        currency: currency || 'INR',
-        name: 'GenZNotes',
-        description: itemTitle,
-        order_id: razorpayOrderId,
-        prefill: {
-          name: user?.name || '',
-          email: user?.email || '',
-          contact: user?.phone || '',
-        },
-        theme: {
-          color: '#F28C52',
-        },
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-            setError('Payment checkout was cancelled. No amount was charged.');
-          },
-        },
-        handler: async function (response) {
-          try {
-            setLoading(true);
-            // Step 3: Cryptographic Server-side Signature Verification & Access Grant
-            const verifyRes = await api.post('/orders/verify', {
-              orderId,
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-            });
+      const mode = cashfreeMode || import.meta.env.VITE_CASHFREE_ENV || 'production';
+      const cashfree = window.Cashfree({ mode });
 
-            if (verifyRes.data?.success) {
-              if (onSuccess) onSuccess(verifyRes.data);
-              onClose();
-            } else {
-              setError(verifyRes.data?.message || 'Payment verification failed.');
-            }
-          } catch (vErr) {
-            setError(vErr.response?.data?.message || 'Server payment signature verification failed.');
-          } finally {
-            setLoading(false);
-          }
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', function (resp) {
-        setLoading(false);
-        setError(resp.error?.description || 'Payment was declined or failed.');
+      // Step 2: Open Cashfree Checkout Modal
+      const result = await cashfree.checkout({
+        paymentSessionId,
+        redirectTarget: '_modal',
       });
-      rzp.open();
+
+      if (result?.redirect) {
+        // Payment method requires full-page redirect; return_url handler completes verification
+        return;
+      }
+
+      if (result?.paymentDetails) {
+        // Step 3: Authoritative Server-side Order Verification & Access Grant
+        const verifyRes = await api.post('/orders/verify', {
+          orderId,
+          cashfreeOrderId,
+        });
+
+        if (verifyRes.data?.success) {
+          if (onSuccess) onSuccess(verifyRes.data);
+          onClose();
+        } else {
+          setError(verifyRes.data?.message || 'Payment verification failed.');
+        }
+        setLoading(false);
+        return;
+      }
+
+      if (result?.error) {
+        setError(result.error.message || 'Payment checkout was cancelled. No amount was charged.');
+      } else {
+        setError('Payment checkout was cancelled. No amount was charged.');
+      }
+      setLoading(false);
     } catch (err) {
       console.error('Checkout error:', err);
       setError(
@@ -201,7 +194,7 @@ const PurchaseModal = ({ isOpen, onClose, itemType, itemId, itemTitle, price, di
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Connecting to Razorpay...</span>
+                  <span>Connecting to Cashfree...</span>
                 </>
               ) : (
                 <>
@@ -214,7 +207,7 @@ const PurchaseModal = ({ isOpen, onClose, itemType, itemId, itemTitle, price, di
 
             <div className="flex items-center justify-center gap-2 text-[11px] text-gray-500 dark:text-gray-400">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-              <span>100% Encrypted & Secure Checkout via Razorpay Payment Gateway</span>
+              <span>100% Encrypted & Secure Checkout via Cashfree Payment Gateway</span>
             </div>
           </div>
         </div>

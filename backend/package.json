@@ -14,12 +14,13 @@
     "notes",
     "college",
     "academic",
-    "razorpay"
+    "cashfree"
   ],
   "author": "Notes Guru Team",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cashfree-pg": "^6.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -28,7 +29,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
     "morgan": "^1.10.0",
-    "razorpay": "^2.9.5",
     "sanitize-html": "^2.14.0",
     "zod": "^3.24.1"
   },

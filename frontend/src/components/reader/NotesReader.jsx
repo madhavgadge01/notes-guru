@@ -1110,7 +1110,7 @@ const NotesReader = ({
                       <div className="relative z-10 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#E3DED5] dark:border-neutral-800">
                         <div className="text-xs text-[#77736C] dark:text-gray-400 flex items-center gap-2">
                           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                          <span>100% Secure Checkout via Razorpay • Instant Academic Access</span>
+                          <span>100% Secure Checkout via Cashfree • Instant Academic Access</span>
                         </div>
                         <button
                           type="button"

@@ -78,7 +78,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Body parsers with rawBody verification for Razorpay Webhook signatures
+// Body parsers with rawBody verification for Cashfree Webhook signatures
 app.use(
   express.json({
     limit: '10mb',

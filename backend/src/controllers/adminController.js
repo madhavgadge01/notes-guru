@@ -199,8 +199,8 @@ const getOrders = async (req, res, next) => {
     if (search) {
       query.$or = [
         { orderNumber: { $regex: search, $options: 'i' } },
-        { razorpayOrderId: { $regex: search, $options: 'i' } },
-        { razorpayPaymentId: { $regex: search, $options: 'i' } },
+        { cashfreeOrderId: { $regex: search, $options: 'i' } },
+        { cashfreePaymentId: { $regex: search, $options: 'i' } },
         { itemTitle: { $regex: search, $options: 'i' } },
       ];
     }

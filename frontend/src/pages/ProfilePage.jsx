@@ -415,7 +415,7 @@ const ProfilePage = () => {
         {activeTab === 'orders' && (
           <div className="bg-white dark:bg-[#202020] rounded-2xl border border-gray-200 dark:border-neutral-800 p-6 sm:p-8">
             <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">
-              All Orders & Razorpay Invoices
+              All Orders & Cashfree Invoices
             </h3>
 
             {loadingOrders ? (
@@ -462,7 +462,7 @@ const ProfilePage = () => {
                           </span>
                         </td>
                         <td className="py-3 px-3 font-mono text-gray-400 text-[11px]">
-                          {ord.razorpayPaymentId || '—'}
+                          {ord.cashfreePaymentId || ord.razorpayPaymentId || '—'}
                         </td>
                         <td className="py-3 px-3 text-gray-500 text-[11px]">
                           {new Date(ord.createdAt).toLocaleDateString()}
